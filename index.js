@@ -1,11 +1,12 @@
 const fs = require('fs');
 const sizes = ['Bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
-const separateFiles = (dir, reference, mod = { inclusive: false, measurement : 'KiB'}) => {
-    if(!fs.existsSync(dir)) {
+const separateFiles = (dir, reference, mod = { inclusive: false, measurement: 'KiB' }) => {
+    if (!fs.existsSync(dir)) {
         throw new Error('Directory does not exist');
     }
     const rFiles = [];
-
+    mod.inclusive = mod.inclusive || false;
+        
     const dirFiles = fs.readdirSync(dir);
 
     const unitIndex = sizes.indexOf(mod.measurement||'KiB');
@@ -33,5 +34,4 @@ function formatBytes(bytes, unitIndex) {
     
     return bytes/(Math.pow(k, unitIndex))
 }
-
 module.exports = separateFiles;
